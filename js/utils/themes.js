@@ -1,5 +1,5 @@
 // ************ Themes ************
-var themes = ["default", "aqua"]
+var themes = ["default", "aqua", "MYEYES"]
 
 var colors = {
 	default: {
@@ -20,6 +20,16 @@ var colors = {
 		points: "#dfefff",
 		locked: "#c4a7b3",
 		background: "#001f3f",
+		background_tooltip: "rgba(0, 15, 31, 0.75)",
+	},
+	MYEYES: {
+		1: "#e2e2e2",
+		2: "#adadad",
+		3: "#9b9b9b",
+		color: "#ffffff",
+		points: "#ffffff",
+		locked: "#6d6d6d",
+		background: "#ffffff",
 		background_tooltip: "rgba(0, 15, 31, 0.75)",
 	},
 }

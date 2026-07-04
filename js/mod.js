@@ -1,27 +1,27 @@
 let modInfo = {
-	name: "The ??? Tree",
-	author: "nobody",
+	name: "Eudaemonic Tree",
+	author: "Eudaemonia / Questionable One",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 1,  // In hours
+	initialStartPoints: new Decimal (5), // Used for hard resets and new players
+	offlineLimit: 0,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: "0.1",
+	name: "The Release",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	<h3>v0.1: The Release</h3><br>
+		- what do you think is in here<br>
+		`
 
-let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
+let winText = `Congrats, you won! though it isn't the end just yet.`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
@@ -42,6 +42,13 @@ function getPointGen() {
 		return new Decimal(0)
 
 	let gain = new Decimal(1)
+	if (hasUpgrade('p', 11)) gain = gain.times(3)
+	if (hasUpgrade('p', 12)) gain = gain.times(0.75)
+	if (hasUpgrade('p', 14)) gain = gain.times(upgradeEffect('p', 14))
+	if (hasUpgrade('p', 15)) gain = gain.times(3)
+	if (hasUpgrade('p', 21)) gain = gain.times(upgradeEffect('p', 21))
+	if (hasUpgrade('p', 22)) gain = gain.times(20)
+	if (hasUpgrade('c', 11)) gain = gain.times(3)
 	return gain
 }
 
@@ -55,7 +62,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.points.gte(new Decimal("e280"))
 }
 
 
