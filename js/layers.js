@@ -45,7 +45,7 @@ addLayer("p", {
         },
         12: {
             title: "Trade Offer",
-            description: "0.75 point gain but 2x prestige point gain.",
+            description: "0.8x point gain but 2x prestige point gain.",
             cost: new Decimal(2),
             unlocked() {
                 return hasUpgrade('p', 11)
