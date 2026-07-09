@@ -1,3 +1,4 @@
+@ -1,178 +1,213 @@
 addLayer("p", {
     name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "P", // This appears on the layer's node. Default is the id with the first letter capitalized
@@ -24,6 +25,8 @@ addLayer("p", {
         if (hasUpgrade('p', 12)) mult = mult.times(2)
         if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
         if (hasUpgrade('p', 23)) mult = mult.times(10)
+        if (hasUpgrade('c', 13)) mult = mult.times(4)
+        if (hasUpgrade('c', 15)) mult = mult.times(mult^2)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -111,10 +114,18 @@ addLayer("p", {
         },
         24: {
             title: "New layer?",
-            description: "Unlock Milestones",
+            description: "Unlock Crystals",
             cost: new Decimal(10000),
             unlocked() {
                 return hasUpgrade('p', 23)
+            }
+        },
+        25: {
+            title: "Prestiged Crystals",
+            description: "1.5x crystals",
+            cost: new Decimal(250000),
+            unlocked() {
+                return hasUpgrade('c', 14)
             }
         },
     },
@@ -136,9 +147,11 @@ addLayer("p", {
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         unlocked() {return hasUpgrade('p', 21)},
+        unlocked() {return hasUpgrade(this.layer, 21)},
         purchaseLimit: 100
     },
 },
+    },
     layerShown(){return true}
 })
 addLayer("c", {
@@ -158,6 +171,7 @@ addLayer("c", {
     exponent: 0.4, // Prestige currency exponent
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasUpgrade('p', 25)) mult = mult.times(1.5)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -173,6 +187,31 @@ addLayer("c", {
             description: "Triple point gain, Autobuy prestige upgrades",
             cost: new Decimal(1),
         },
+        12: {
+            title: "Crystallized Points",
+            description: "Quadruple points",
+            cost: new Decimal(2),
+            unlocked() {return hasUpgrade(this.layer, 11)}
+        },
+        13: {
+            title: "Crystallized Prestiges",
+            description: "Quadruple prestige points",
+            cost: new Decimal(2),
+            unlocked() {return hasUpgrade(this.layer, 11)}
+        },
+        14: {
+            title: "Prestige stays relevant",
+            description: "Unlock a prestige upgrade",
+            cost: new Decimal(3),
+            unlocked() {return hasUpgrade(this.layer, 12) || hasUpgrade(this.layer, 13)}
+        },
+        15: {
+            title: "Say goodbye to prestige",
+            description: "2^ prestige points",
+            cost: new Decimal(5),
+            unlocked() {return hasUpgrade(this.layer, 14)}
+        },
     },
     layerShown(){return hasUpgrade('p', 24) || hasUpgrade('c', 11)}
+    layerShown(){return hasUpgrade('p', 24) || hasUpgrade(this.layer, 11)}
 })
